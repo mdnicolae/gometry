@@ -1,4 +1,4 @@
-name: Go CI with Incremental Tagging
+name: Go CI with Conditional Release
 
 on:
   push:
@@ -39,11 +39,16 @@ jobs:
       - name: Run tests
         run: go test ./...
 
-  tag:
-    name: Create Incremental Tag
+      # Set an environment variable if tests pass
+      - name: Set test result output
+        if: success()
+        run: echo "tests_passed=true" >> $GITHUB_ENV
+
+  release:
+    name: Create GitHub Release
     runs-on: ubuntu-latest
     needs: test
-    if: ${{ github.event_name == 'workflow_dispatch' }}  # Only run on manual trigger
+    if: ${{ github.event_name == 'workflow_dispatch' && env.tests_passed == 'true' }}  # Only if manually triggered and tests passed
 
     steps:
       - name: Checkout code
@@ -92,3 +97,15 @@ jobs:
         run: |
           git tag -a "$tag" -m "Release $tag"
           git push origin "$tag"
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.tag }}
+          release_name: "Release ${{ env.tag }}"
+          body: "Automated release based on successful tests."
+          draft: false
+          prerelease: false
