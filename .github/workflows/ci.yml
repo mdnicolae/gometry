@@ -24,6 +24,9 @@ jobs:
     name: Run Go Tests
     runs-on: ubuntu-latest
 
+    outputs:
+      tests_passed: ${{ steps.tests_passed.outcome == 'success' }}  # Set output based on test outcome
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -37,18 +40,14 @@ jobs:
         run: go mod download
 
       - name: Run tests
+        id: tests_passed  # Assign ID to use the outcome
         run: go test ./...
-
-      # Set an environment variable if tests pass
-      - name: Set test result output
-        if: success()
-        run: echo "tests_passed=true" >> $GITHUB_ENV
 
   release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
     needs: test
-    if: ${{ github.event_name == 'workflow_dispatch' && env.tests_passed == 'true' }}  # Only if manually triggered and tests passed
+    if: ${{ github.event_name == 'workflow_dispatch' && needs.test.outputs.tests_passed == 'true' }}  # Run only if manually triggered and tests passed
 
     steps:
       - name: Checkout code
