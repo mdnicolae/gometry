@@ -4,28 +4,11 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
-    inputs:
-      tag_type:
-        description: 'Specify the version increment type: patch, minor, or major'
-        required: true
-        default: 'patch'
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
 
 jobs:
   test:
     name: tests
     runs-on: ubuntu-latest
-
-    outputs:
-      tests_passed: ${{ steps.tests_passed.outcome == 'success' }}
 
     steps:
       - name: Checkout code
@@ -47,7 +30,7 @@ jobs:
     name: release
     runs-on: ubuntu-latest
     needs: test
-    if: ${{ github.event_name == 'workflow_dispatch' && needs.test.outputs.tests_passed == 'true' }}
+    if: ${{ success() }}
 
     steps:
       - name: Checkout code
@@ -69,12 +52,12 @@ jobs:
           # Check if there is an existing tag
           latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo "v0.0.0")
           echo "Latest tag: $latest_tag"
-          
+
           # Split the version into major, minor, and patch
           IFS='.' read -r major minor patch <<< "${latest_tag#v}"
 
           # Determine increment based on input
-          case "${{ github.event.inputs.tag_type }}" in
+          case "patch" in
             major) major=$((major + 1)); minor=0; patch=0 ;;
             minor) minor=$((minor + 1)); patch=0 ;;
             patch) patch=$((patch + 1)) ;;
