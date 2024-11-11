@@ -1,0 +1,21 @@
+[
+  {
+    "identifier": "cli-driver",
+    "driver": "cli",
+    "default": true
+  },
+  {
+    "identifier": "cli-no-color",
+    "driver": "cli",
+    "options": {
+      "colors": false
+    }
+  },
+  {
+    "identifier": "file-driver",
+    "driver": "file",
+    "options": {
+      "file": "app-logs.log"
+    }
+  }
+]
