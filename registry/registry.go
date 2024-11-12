@@ -33,24 +33,20 @@ func loadConfig() error {
 	}
 
 	for _, cfg := range configs {
-		// Look up the driver factory in the registry
 		factory, exists := drivers[cfg.Driver]
 		if !exists {
 			return fmt.Errorf("unsupported driver: %s", cfg.Driver)
 		}
 
-		// Create a new instance of the driver with its configuration
 		instance, err := factory(cfg.Options)
 		if err != nil {
 			return fmt.Errorf("could not initialize driver %s: %v", cfg.Identifier, err)
 		}
 
-		// Store the instance in the registry
 		mu.Lock()
 		instanceRegistry[cfg.Identifier] = instance
 		mu.Unlock()
 
-		// Set the default driver identifier if specified
 		if cfg.Default {
 			defaultDriverIdentifier = cfg.Identifier
 		}

@@ -25,5 +25,15 @@
       "job_name": "gometry_job",
       "gateway": "${PROMETHEUS_GATEWAY}"
     }
+  },
+  {
+    "identifier": "my_custom_driver",
+    "driver": "influxdb",
+    "options": {
+      "url": "${INFLUXDB_URL}",
+      "token": "${INFLUXDB_TOKEN}",
+      "bucket": "gometry",
+      "org": "gometry"
+    }
   }
 ]
