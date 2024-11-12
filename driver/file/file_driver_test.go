@@ -2,7 +2,7 @@ package file
 
 import (
 	"fmt"
-	"gometry/logging"
+	"github.com/mdnicolae/gometry/logging"
 	"os"
 	"strings"
 	"testing"
