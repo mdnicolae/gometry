@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"gometry"
-	"gometry/logging"
+	"github.com/mdnicolae/gometry"
+	"github.com/mdnicolae/gometry/logging"
 	"math/rand"
 )
 

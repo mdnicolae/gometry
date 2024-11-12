@@ -1,4 +1,3 @@
-// gometry/config/env_parser.go
 package config
 
 import (
@@ -7,7 +6,6 @@ import (
 	"regexp"
 )
 
-// Regex to match environment variable placeholders like ${VAR_NAME}
 var envVarRegex = regexp.MustCompile(`\$\{([A-Za-z_][A-Za-z0-9_]*)}`)
 
 // expandEnvVariables replaces placeholders like ${VAR_NAME} with the environment variable values.
@@ -22,7 +20,6 @@ func expandEnvVariables(value string) string {
 	})
 }
 
-// ExpandConfigEnvVariables takes an array of TelemetryConfig structs and replaces env vars in Options fields.
 func ExpandConfigEnvVariables(configs []TelemetryConfig) []TelemetryConfig {
 	for i, cfg := range configs {
 		for key, value := range cfg.Options {

@@ -1,9 +1,9 @@
 package prometheus
 
 import (
+	"github.com/mdnicolae/gometry/logging"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/testutil"
-	"gometry/logging"
 	"testing"
 	_ "time"
 )

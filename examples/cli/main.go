@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gometry"
+	"github.com/mdnicolae/gometry"
 )
 
 func main() {

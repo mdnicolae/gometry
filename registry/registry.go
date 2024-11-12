@@ -2,8 +2,8 @@ package registry
 
 import (
 	"fmt"
-	"gometry/config"
-	"gometry/logging"
+	"github.com/mdnicolae/gometry/config"
+	"github.com/mdnicolae/gometry/logging"
 	"sync"
 )
 

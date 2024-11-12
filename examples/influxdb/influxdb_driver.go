@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/influxdata/influxdb-client-go/v2"
 	"github.com/influxdata/influxdb-client-go/v2/api"
-	"gometry/logging"
-	"gometry/registry"
+	"github.com/mdnicolae/gometry/logging"
+	"github.com/mdnicolae/gometry/registry"
 	"sync"
 	"time"
 )

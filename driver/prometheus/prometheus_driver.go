@@ -2,10 +2,10 @@ package prometheus
 
 import (
 	"fmt"
+	"github.com/mdnicolae/gometry/logging"
+	"github.com/mdnicolae/gometry/registry"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/push"
-	"gometry/logging"
-	"gometry/registry"
 	"sync"
 )
 

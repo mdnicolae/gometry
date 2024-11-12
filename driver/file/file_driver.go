@@ -2,8 +2,8 @@ package file
 
 import (
 	"fmt"
-	"gometry/logging"
-	"gometry/registry"
+	"github.com/mdnicolae/gometry/logging"
+	"github.com/mdnicolae/gometry/registry"
 	"os"
 	"sync"
 	"time"
