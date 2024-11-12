@@ -1,4 +1,4 @@
-module gometry
+module github.com/mdnicolae/gometry
 
 go 1.21.4
 
