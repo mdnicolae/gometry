@@ -17,5 +17,13 @@
     "options": {
       "file": "app-logs.log"
     }
+  },
+  {
+    "identifier": "prom",
+    "driver": "prometheus",
+    "options": {
+      "job_name": "gometry_job",
+      "gateway": "${PROMETHEUS_GATEWAY}"
+    }
   }
 ]

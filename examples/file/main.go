@@ -21,8 +21,8 @@ func main() {
 		}
 	}(gmy)
 
-	// Start a trace with random uuid
-	gmy.StartTrace(fmt.Sprintf("trace-%d", rand.Intn(1000000)))
+	// Start a trace with random id
+	gmy.StartTrace(fmt.Sprintf("x-trace-id-%d", rand.Intn(1000000)))
 
 	// Log messages at different levels
 	gmy.Info("This is an info message", map[string]interface{}{"user": "john_doe"})

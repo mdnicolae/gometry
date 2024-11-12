@@ -3,6 +3,7 @@ package gometry
 import (
 	_ "gometry/driver/cli"
 	_ "gometry/driver/file"
+	_ "gometry/driver/prometheus"
 	"gometry/logging"
 	"gometry/registry"
 )
