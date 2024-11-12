@@ -49,31 +49,29 @@ jobs:
       - name: Determine Next Tag Version
         id: tag_version
         run: |
-          # Check if there is an existing tag
           latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || echo "v0.0.0")
           echo "Latest tag: $latest_tag"
 
-          # Split the version into major, minor, and patch
           IFS='.' read -r major minor patch <<< "${latest_tag#v}"
 
-          # Determine increment based on input
-          case "patch" in
-            major) major=$((major + 1)); minor=0; patch=0 ;;
-            minor) minor=$((minor + 1)); patch=0 ;;
-            patch) patch=$((patch + 1)) ;;
-          esac
+          patch=$((patch + 1))
 
-          # Construct new tag
           new_tag="v$major.$minor.$patch"
           echo "New tag: $new_tag"
           echo "tag=$new_tag" >> $GITHUB_ENV
 
       - name: Create and Push New Tag
+        if: ${{ steps.tag_version.outputs.tag != github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git tag -a "$tag" -m "Release $tag"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} "$tag"
+          # Check if the tag already exists
+          if git rev-parse "$tag" >/dev/null 2>&1; then
+            echo "Tag $tag already exists. Skipping tag creation."
+          else
+            git tag -a "$tag" -m "Release $tag"
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} "$tag"
+          fi
 
       - name: Create GitHub Release
         id: create_release
